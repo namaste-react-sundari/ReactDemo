@@ -1,4 +1,5 @@
-
+import React from "react"
+import ReactDOM from "react-dom/client"
 
 // we created a root using ReactDOM library, which is the place, where all the react code render.
 const root = ReactDOM.createRoot(document.getElementById("root"));
