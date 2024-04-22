@@ -1,48 +1,84 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
 
-// we created a root using ReactDOM library, which is the place, where all the react code render.
-const root = ReactDOM.createRoot(document.getElementById("root"));
+// Creating React Element using Core React.
+const heading = React.createElement(
+    "h1",{"id":"heading"},"First React Element using Core React."
+);
+
+// Creating React Element using JSX.
+const jsxHeading = (<h1 id="heading" className="heading">First React Element using JSX</h1>)
+
+// Creating React Element using Funcional Component.
+const JsxHeading = ()=> (<h1 id="heading" className="heading">First React Element using JSX</h1>);
+
+// Creating React Functional Component.
+const HeadingComponent1 = ()=>{	
+	return <h1>This is a Fist Functional Component</h1>;	
+}
+
+//or
+
+// Creating React Functional Component using short hand.
+const HeadingComponent2 = ()=>  <h1>This is a Short Hand of Functional Component</h1>;	
+
+//or
+
+// Creating React Functional Component using short hand and wrapping with ().
+const HeadingComponent3 = ()=> ( 
+    <div id="container">
+        <HeadingComponent2/>
+         <h1 className="heading">            
+            This is a Fist Functional Component
+         </h1>
+    </div>
+);	
+
+// Creating React Functional Component using short hand and wrapping with ().
+const HeadingComponent4 = ()=> {
+    return ( 
+    <div id="container">
+        <HeadingComponent2/>
+         <h1 className="heading">            
+            This is a Fist Functional Component
+         </h1>
+    </div>
+    )
+};	
+
+// Creating React Functional Component using normal function.
+const HeadingComponent5 = function() {
+    return (
+    <div id="container">
+        <HeadingComponent2/>
+         <h1 className="heading">            
+            This is a Fist Functional Component
+         </h1>
+    </div>
+    )
+};	
+
+const rootDiv = ReactDOM.createRoot(document.getElementById("root"));
+// rootDiv.render(jsxHeading);
 
 /**
- * Example of an element inside nested elements.
- * 
- * <div id="parent">
- *  <div id="child">
- *      <h1 id="heading" xyz="abc">Hello World, using React.</h1>
- *  </div>
- * </div>
- * 
+ * Injecting One React Element into another React Element.
  */
-// const header = React.createElement("h1",{id:"heading", xyz:"abc"},"Hello World, using React.");
-// const child = React.createElement("div",{id:"child"},header);
-// const parent = React.createElement("div",{id:"parent"},child);
+const ele = "MK";
+const element1 =  <span id="element1">React Element1</span>;
+const element2 = (
+	<div>
+		{element1}
+		<h1 id="element2">React Element2: {ele}</h1>
+        <HeadingComponent1/>
+	</div>
+); 
+
+rootDiv.render(element2);
 
 /**
- * Example of sibling div nodes child1, child2, in a parent div
- * 
- * <div id="root">
- *  <div id="parent">
- *      <div id="child1">
- *          <h1 id="heading1">Heading-1</h1>
- *          <h2 id="heading2">Heading-2</h2>
- *      </div>
- *      <div id="child2">
- *          <h1 id="heading1">Heading-1</h1>
- *          <h2 id="heading2">Heading-2</h2>
- *      </div>
- *  </div>
- * </div>
+ * This is the way of rendering functional components in ReactDom's root.
+ * When ever Babel parsing the render statement, after seeing </> and name which starts with capital letter,
+   it then assumes there must be a component existing and convert it to React element.
  */
-const child1_h1 = React.createElement("h1",{id:"heading1"},"Heading-1");
-const child1_h2 = React.createElement("h2",{id:"heading2"},"Heading-2");
-const child1 = React.createElement("div",{id:"child1"},[child1_h1, child1_h2]);
-
-const child2_h1 = React.createElement("h1",{id:"heading1"},"Heading-1");
-const child2_h2 = React.createElement("h2",{id:"heading2"},"Heading-2");
-const child2 = React.createElement("div",{id:"child2"},[child2_h1, child2_h2]);
-
-const parent = React.createElement("div",{id:"parent"}, [child1,child2]);
-
-
-root.render(parent);
+// rootDiv.render(<HeadingComponent5/>)
