@@ -1,3 +1,78 @@
-#heading{
-    color: red;
+.header-container{
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid black;
+}
+.logo{
+    max-width: 60px;
+    max-height: 60px;
+   }
+.nav-items > ul{
+    display: flex; 
+}
+
+/* Inorder to apply style properties to un-ordered list elements in div with class "nav-ites" */
+.nav-items > ul > li{
+     margin: 10px;
+     padding: 0px 20px; 
+     list-style-type: none;
+     font-size: 14px;
+}
+
+.restro-cards-container{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.restro-card{
+    width: 200px;
+    height: 400px;    
+    margin: 2px 0px;
+    padding: 3px;
+    overflow: hidden;
+}
+.restro-card:hover{
+    cursor: pointer;
+    border: 1px solid black;
+}
+
+.restro-card-image{
+  width: 100%;    /* Fill the width of the card */
+  height: 50%;    /* Fill a percentage of the card's height */
+  object-fit: cover;  /* Ensures image fills the container, potentially cropping */
+}
+
+.restro-card > .restro-card-rating-and-distance > span {
+    margin-right: 10px;
+}
+
+.filter-button{
+    cursor: pointer;
+    border: 1px solid black;
+}
+
+.search-button{
+    margin-left: 5px;
+}
+
+.body-conatiner > div {
+    margin-top: 10px;
+}
+
+.shimmer-card{
+    width: 200px;
+    height: 300px;
+    margin: 10px;
+    background-color: #f0f0f0;
+}
+
+.shimmer-container{
+    border: 1px solid black;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.login-button{
+    margin: 0px 20px;
+    cursor: pointer;
 }
