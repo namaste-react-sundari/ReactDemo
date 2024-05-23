@@ -1,11 +1,13 @@
+import {Link} from "react-router-dom";
+
 const RestaurantCard = (props)=>{
     /**
      * destructuring javascript objects.
      */
     
     const {resData} =props;
-    const {imageUrl, name} = resData;
-    // console.log(resData.rating)
+    const {imageUrl, name, url} = resData;
+ 
     // if(resData.rating == undefined){
     //     console.log(resData)
     // }
@@ -17,15 +19,19 @@ const RestaurantCard = (props)=>{
     const {aggregate_rating = 0, rating_subtitle = 0} = resData.rating || {};
     const {cuisines = []} = resData.subtitleData || {};
  
-    
+    // Encode the URL to safely pass it as a URL parameter
+    const encodedUrl = encodeURIComponent(url);
 
     return(       
             <div className="restro-card" style={{background:"#f0f0f0"}}>
+               
+               <Link to={`/restaurants?encodedUrl=${encodedUrl}`}>
                 <img className="restro-card-image" 
                 src={imageUrl} 
                 alt="Resturant Logo"
-                style={{}}></img>
+                ></img>
                 <h3 >{name}</h3>
+                </Link>
                 <h2>Available Cuisines</h2>
                 <p>
                     {cuisines && cuisines.length > 0 ? (

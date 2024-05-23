@@ -23,6 +23,7 @@ useEffect(()=>{
  const fetchData = async ()=>{
     const data = await fetch("https://corsproxy.io/?https://www.zomato.com/webroutes/getPage?page_url=/hyderabad/live-sports-screenings&location=&isMobile=0");
     const json = await data.json();
+    // console.log(json);
     // console.log(json?.page_data?.sections?.SECTION_ENTITIES_DATA);
     setResData(json?.page_data?.sections?.SECTION_ENTITIES_DATA);
     setFilteredResData(json?.page_data?.sections?.SECTION_ENTITIES_DATA);

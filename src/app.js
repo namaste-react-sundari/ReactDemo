@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom"
 import AboutComponent from "./components/About"
 import ContactComponent from "./components/Contact"
 import ErrorComponent from "./components/Error"
+import RestaurantMenu from "./components/RestaurantMenu"
 
 
 const APPLayoutComponent = () => {
@@ -31,6 +32,9 @@ const configuration = [
     },{ 
         path:"/contact",
         element:<ContactComponent/>
+    },{ 
+        path:"/restaurants",
+        element:<RestaurantMenu/>,
     }]
 },
 { 
@@ -42,7 +46,7 @@ const configuration = [
     path:"/contact",
     element:<ContactComponent/>,
     errorElement: <ErrorComponent/>,
-}
+},
 // ,{
 //     path: "*",
 //     element: <ErrorComponent />, // Catch-all route for non-existing paths
