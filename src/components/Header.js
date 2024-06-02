@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
-import { CDN_LOGO_URL, LOGO_URL } from "../utils/constant";
-import {Link} from "react-router-dom";
-import mk from "../utils/constant";
+import { useState, useEffect } from 'react';
+import { CDN_LOGO_URL, LOGO_URL } from '../utils/constant';
+import { Link } from 'react-router-dom';
+import { useOnlineStatus } from '../utils/useOnlineStatus';
+
 const Header = () => {
-  const [btnName, signInSignUpTrigger] = useState("Login");
+  const [btnName, signInSignUpTrigger] = useState('Login');
   useEffect(() => {
-    console.log("Header useEffect called");
+    console.log('Header useEffect called');
   }, [btnName]);
+  const onlineSatus = useOnlineStatus();
   return (
     <div className="header-container">
       <div className="logo-container">
@@ -17,19 +19,26 @@ const Header = () => {
       </div>
       <div className="nav-items">
         <ul>
-          
-          
-          
-          <li><Link to="/">Home</Link></li>          
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/contact">Contact Us</Link></li>
+          <li>Online Status: {onlineSatus ? 'Green' : 'Red'}</li>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About</Link>
+          </li>
+          <li>
+            <Link to="/contact">Contact Us</Link>
+          </li>
           <li>Cart</li>
+          <li>
+            <Link to="/grocery">Grocery</Link>
+          </li>
           <button
             className="login-button"
             onClick={() => {
-              btnName === "Login"
-                ? signInSignUpTrigger("Logout")
-                : signInSignUpTrigger("Login");
+              btnName === 'Login'
+                ? signInSignUpTrigger('Logout')
+                : signInSignUpTrigger('Login');
             }}
           >
             {btnName}
