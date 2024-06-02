@@ -1,9 +1,17 @@
-import { useState, useEffect } from "react";
-import Shimmer from "./Shimmer";
-import { useParams, useLocation } from "react-router-dom";
-import {Menu_API} from "../utils/constant";
+import { useState, useEffect } from 'react';
+import Shimmer from './Shimmer';
+import { useParams, useLocation } from 'react-router-dom';
+import { useFetchViaURL } from '../utils/useFetchViaURL';
 
 const RestaurantMenu = (props) => {
+  const [resData, setResData] = useState({
+    res_thumb: null,
+    res_id: null,
+    rating: {},
+    name: null,
+    cuisines: [],
+  });
+  // const [resData, setResData] = useState([]);
   /**
      * json.page_data.sections.SECTION_BASIC_INFO
 
@@ -17,58 +25,39 @@ const RestaurantMenu = (props) => {
         CUISINES.cuisines
      */
   const location = useLocation();
-
   // Parse query parameters
   const queryParams = new URLSearchParams(location.search);
-  const encodedUrl = queryParams.get("encodedUrl");
+  const encodedUrl = queryParams.get('encodedUrl');
   const decodedUrl = decodeURIComponent(encodedUrl);
 
-  const [resData, setResData] = useState({
-    res_thumb: null,
-    res_id: null,
-    rating: {},
-    name: null,
-    cuisines: [],
-  });
-
-  // const {url} = useParams();
-  // const decodedUrl = decodeURIComponent(url);
+  const { responseJSON, error, loading } = useFetchViaURL(decodedUrl);
 
   useEffect(() => {
-    fetchMenu();
-  }, []);
+    if (responseJSON) {
+      const basicInfo =
+        responseJSON?.page_data?.sections?.SECTION_BASIC_INFO || {};
+      const resDetails =
+        responseJSON?.page_data?.sections?.SECTION_RES_DETAILS || {};
 
-  const extractPathFromUrl = (url) => {
-    const urlObj = new URL(url);
-    return urlObj.pathname.replace(/^\/|\/$/g, ""); // Remove leading/trailing slashes
-  };
+      const { res_thumb, res_id, rating, name } = basicInfo;
+      const cuisines = resDetails?.CUISINES?.cuisines || [];
 
-  const fetchMenu = async () => {
-    const path = extractPathFromUrl(decodedUrl);
-    const data = await fetch(Menu_API+path);
-    const json = await data.json();
+      setResData({
+        res_thumb,
+        res_id,
+        rating,
+        name,
+        cuisines,
+      });
+    }
+  }, [responseJSON]);
 
-    const basicInfo = json?.page_data?.sections?.SECTION_BASIC_INFO || {};
-    const resDetails = json?.page_data?.sections?.SECTION_RES_DETAILS || {};
-
-    const { res_thumb, res_id, rating, name } = basicInfo;
-
-    const cuisines = resDetails?.CUISINES?.cuisines || [];
-
-    setResData({
-      res_thumb,
-      res_id,
-      rating,
-      name,
-      cuisines,
-    });
-  };
+  if (loading) return <Shimmer />;
+  if (error) return <div>Error: {error.message}</div>;
 
   const { res_thumb, res_id, rating, name, cuisines } = resData;
 
-  return resData == null ? (
-    <Shimmer />
-  ) : (
+  return (
     <div>
       <h1>{name}</h1>
       {res_thumb && <img src={res_thumb} alt={`${name} Thumbnail`} />}
